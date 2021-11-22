@@ -1,0 +1,29 @@
+<h3>List des tâches a réaliser .</h3>
+<br />
+<ul class="list-group">
+  <li class="list-group-item" *ngFor="let todo of todos; let i = index">
+    <div [ngClass]="{encours:todo.todoStatus,terminer:!todo.todoStatus}">
+    <a [href]="todo.image"> <img [src]="todo.image" /></a>
+
+    {{ todo.todoName }}
+
+    <button
+      class="btn btn-primary"
+      [disabled]="todo.todoStatus"
+      (click)="onChangeStatus(i)"
+    >
+      En cours
+    </button>
+    <button
+      class="btn btn-success"
+      [disabled]="!todo.todoStatus"
+      (click)="onChangeStatus(i)"
+    >
+      Terminer
+      
+    </button>
+    //[(ngModel)] 3 - two ways binding
+    <input type="text" class="form-control" [(ngModel)]="todo.todoName"/>
+  </div>
+  </li>
+</ul>
