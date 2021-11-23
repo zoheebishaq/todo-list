@@ -1,29 +1,54 @@
-<h3>List des tâches a réaliser .</h3>
+<h1 [ngStyle]="{ color: 'blue' }">Liste des tâches a réaliser .</h1>
+<p>Nous sommes le {{ today | date: "dd/MM/yyyy" }}</p>
+<!-- <h1 [ngClass]="['classe1','classe2']">Liste des tâches a réaliser .</h1> -->
+<!-- <h1 [ngClass]="'classe1 classe2'">Liste des tâches a réaliser .</h1> -->
 <br />
 <ul class="list-group">
   <li class="list-group-item" *ngFor="let todo of todos; let i = index">
-    <div [ngClass]="{encours:todo.todoStatus,terminer:!todo.todoStatus}">
-    <a [href]="todo.image"> <img [src]="todo.image" /></a>
+    <!-- PIPE Pour DEBUG -->
 
-    {{ todo.todoName }}
+    <!-- {{todo | json}} -->
+    <div [ngClass]="{ encours: todo.todoStatus, terminer: !todo.todoStatus }">
+      <a [href]="todo.image"> <img [src]="todo.image" /></a>
 
-    <button
-      class="btn btn-primary"
-      [disabled]="todo.todoStatus"
-      (click)="onChangeStatus(i)"
-    >
-      En cours
-    </button>
-    <button
-      class="btn btn-success"
-      [disabled]="!todo.todoStatus"
-      (click)="onChangeStatus(i)"
-    >
-      Terminer
-      
-    </button>
-    //[(ngModel)] 3 - two ways binding
-    <input type="text" class="form-control" [(ngModel)]="todo.todoName"/>
-  </div>
+      {{ todo.todoName | uppercase }}
+
+      <button
+        class="btn btn-primary"
+        [disabled]="todo.todoStatus"
+        (click)="onChangeStatus(i)"
+      >
+        En cours
+      </button>
+      <button
+        class="btn btn-success"
+        [disabled]="!todo.todoStatus"
+        (click)="onChangeStatus(i)"
+      >
+        Terminer
+      </button>
+      <!-- Action de modification ngif 2 -->
+      <button
+        class="btn btn-danger"
+        *ngIf="!todo.isModif"
+        (click)="onChangeModif(i)"
+      >
+        Modifier
+      </button>
+      <button
+        class="btn btn-success"
+        *ngIf="todo.isModif"
+        (click)="onChangeModif(i)"
+      >
+        Modification terminer
+      </button>
+      <!-- [(ngModel)] 3 - two ways binding -->
+      <input
+        *ngIf="todo.isModif"
+        type="text"
+        class="form-control"
+        [(ngModel)]="todo.todoName"
+      />
+    </div>
   </li>
 </ul>
