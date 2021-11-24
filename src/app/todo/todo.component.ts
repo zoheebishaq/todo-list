@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { TodoService } from '../services/todo.service';
 
 @Component({
   selector: 'my-todo',
@@ -6,51 +7,26 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./todo.component.css'],
 })
 export class TodoComponent implements OnInit {
-  constructor() {}
 
-  ngOnInit(): void {}
+  today!: Date;
+  todos!: { todoName: string; todoStatus: boolean; image: string; isModif: boolean; }[];
 
-  // ng if 1
+
+  constructor(private todoService:TodoService) {
+
+  }
+
+  ngOnInit(): void {
+    this.today = this.todoService.today;
+    this.todos = this.todoService.todos;
+  }
   onChangeModif(i:any){
-    this.todos[i].isModif = ! this.todos[i].isModif;
+    this.todoService.onChangeModifService(i)
+    
   }
-
+  
   onChangeStatus(i:number){
-    this.todos[i].todoStatus =!this.todos[i].todoStatus;
+    this.todoService.onChangeStatusService(i)
   }
-
-  // todoOne: string = 'Projet 1';
-  // todoTwo: string = 'Projet 2';
-  // todoThree: string = 'Projet 3';
-  // todoFour: string = 'Projet 4';
-  today = new Date();
-
-  todos = [
-    {
-      todoName:"Projet 1",
-      todoStatus:true,
-      image:"http://placehold.it/150",
-      isModif: false,
-
-
-    },
-    {
-      todoName:"Projet 2",
-      todoStatus:true,
-      image:"http://placehold.it/150",
-      isModif: false
-    },
-    {
-      todoName:"Projet 3",
-      todoStatus:false,
-      image:"http://placehold.it/150",
-      isModif: false
-    },
-    {
-      todoName:"Projet 4",
-      todoStatus:false,
-      image:"http://placehold.it/150",
-      isModif: false
-    },
-  ]
+ 
 }
